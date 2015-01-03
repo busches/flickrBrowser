@@ -29,6 +29,10 @@ public class GetFlickrJsonData extends GetRawData {
         downloadJsonData.execute(mDestinationUri.toString());
     }
 
+    public List<Photo> getPhotos() {
+        return mPhotos;
+    }
+
     private boolean createAndUpdateUri(String searchCriteria, boolean matchAll) {
         final String FLICKER_API_BASE_URL = "https://api.flickr.com/services/feeds/photos_public.gne";
         final String TAGS_PARAM = "tags";
@@ -95,7 +99,8 @@ public class GetFlickrJsonData extends GetRawData {
 
         @Override
         protected String doInBackground(String... params) {
-            return super.doInBackground(params);
+            String[] param = {mDestinationUri.toString()};
+            return super.doInBackground(param);
         }
     }
 }
