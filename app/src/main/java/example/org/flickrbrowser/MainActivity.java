@@ -1,16 +1,24 @@
 package example.org.flickrbrowser;
 
+import android.drm.ProcessedData;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity {
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private ArrayList<Photo> mPhotosList = new ArrayList<Photo>();
+    private RecyclerView mRecyclerView;
+    private FlickrRecyclerViewAdapter mFlickrRecyclerViewAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,4 +50,26 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public class ProcessPhotos extends GetFlickrJsonData {
+        public ProcessPhotos(String searchCriteria, boolean matchAll) {
+            super(searchCriteria, matchAll);
+        }
+
+        @Override
+        public void execute() {
+            super.execute();
+            ProcessData processData = new ProcessData();
+            processData.execute();
+        }
+
+        public class ProcessData extends DownloadJsonData {
+            @Override
+            protected void onPostExecute(String webData) {
+                super.onPostExecute(webData);
+                FlickrRecyclerViewAdapter flickrRecyclerViewAdapter =
+                        new FlickrRecyclerViewAdapter(MainActivity.this, getPhotos());
+                mRecyclerView.setAdapter(flickrRecyclerViewAdapter);
+            }
+        }
+    }
 }
