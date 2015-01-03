@@ -22,6 +22,11 @@ public class GetRawData {
     private String LOG_TAG = GetRawData.class.getSimpleName();
     private String mRawUrl;
     private String mData;
+
+    public void setRawUrl(String mRawUrl) {
+        this.mRawUrl = mRawUrl;
+    }
+
     private DownloadStatus mDownloadStatus;
 
     public GetRawData(String mRawUrl) {

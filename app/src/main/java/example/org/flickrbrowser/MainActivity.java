@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 
 
 public class MainActivity extends ActionBarActivity {
-    private final String feedURL = "https://api.flickr.com/services/feeds/photos_public.gne?tags=android,lollipop&format=json&nojsoncallback=1";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,10 +20,10 @@ public class MainActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-        GetRawData theRawData = new GetRawData(feedURL);
-        theRawData.execute();
+        GetFlickrJsonData getFlickrJsonData =
+                new GetFlickrJsonData("Lollipop,android", true);
+        getFlickrJsonData.execute();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
