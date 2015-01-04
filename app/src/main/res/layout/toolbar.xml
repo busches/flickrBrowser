@@ -5,5 +5,5 @@
     android:layout_width="match_parent"
     android:layout_height="?actionBarSize"
     flickr:theme="@style/ActionBarThemeOverlay"
-    flickr:titleTextAppearance="@style/ActionBar.TitleText"/>
-    <!--flickr:popupTheme="@style/ActionBarPopupThemeOverlay"-->
+    flickr:titleTextAppearance="@style/ActionBar.TitleText"
+    android:id="@+id/app_bar" />
