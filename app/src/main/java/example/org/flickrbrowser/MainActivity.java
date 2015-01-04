@@ -26,6 +26,9 @@ public class MainActivity extends BaseActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        ProcessPhotos processPhotos = new ProcessPhotos("Lollipop,android", true);
+        processPhotos.execute();
     }
 
     @Override
@@ -58,11 +61,16 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String searchString = sharedPreferences.getString(FLICKR_QUERY, "Lollipop,android");
+        if (mFlickrRecyclerViewAdapter != null) {
+            String searchString = getSavedPreferenceData(FLICKR_QUERY);
+            ProcessPhotos processPhotos = new ProcessPhotos(searchString, true);
+            processPhotos.execute();
+        }
+    }
 
-        ProcessPhotos processPhotos = new ProcessPhotos(searchString, true);
-        processPhotos.execute();
+    private String getSavedPreferenceData(String key) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        return sharedPreferences.getString(key, "");
     }
 
     public class ProcessPhotos extends GetFlickrJsonData {
@@ -81,9 +89,9 @@ public class MainActivity extends BaseActivity {
             @Override
             protected void onPostExecute(String webData) {
                 super.onPostExecute(webData);
-                FlickrRecyclerViewAdapter flickrRecyclerViewAdapter =
+                mFlickrRecyclerViewAdapter =
                         new FlickrRecyclerViewAdapter(MainActivity.this, getPhotos());
-                mRecyclerView.setAdapter(flickrRecyclerViewAdapter);
+                mRecyclerView.setAdapter(mFlickrRecyclerViewAdapter);
             }
         }
     }
