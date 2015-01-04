@@ -61,11 +61,9 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        if (mFlickrRecyclerViewAdapter != null) {
-            String searchString = getSavedPreferenceData(FLICKR_QUERY);
-            ProcessPhotos processPhotos = new ProcessPhotos(searchString, true);
-            processPhotos.execute();
-        }
+        String searchString = getSavedPreferenceData(FLICKR_QUERY);
+        ProcessPhotos processPhotos = new ProcessPhotos(searchString, true);
+        processPhotos.execute();
     }
 
     private String getSavedPreferenceData(String key) {
