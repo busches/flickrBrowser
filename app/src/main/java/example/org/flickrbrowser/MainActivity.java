@@ -29,9 +29,6 @@ public class MainActivity extends BaseActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mFlickrRecyclerViewAdapter);
-
-        ProcessPhotos processPhotos = new ProcessPhotos("Lollipop,android", true);
-        processPhotos.execute();
     }
 
     @Override
@@ -73,7 +70,7 @@ public class MainActivity extends BaseActivity {
 
     private String getSavedPreferenceData(String key) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        return sharedPreferences.getString(key, "");
+        return sharedPreferences.getString(key, "Lollipop,android");
     }
 
     public class ProcessPhotos extends GetFlickrJsonData {
