@@ -42,4 +42,9 @@ public class FlickrRecyclerViewAdapter extends RecyclerView.Adapter<FlickrImageV
     public int getItemCount() {
         return mPhotosList == null ? 0 : mPhotosList.size();
     }
+
+   public void loadNewData(List<Photo> newPhotos){
+       mPhotosList = newPhotos;
+       notifyDataSetChanged();
+   }
 }

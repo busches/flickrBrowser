@@ -24,8 +24,11 @@ public class MainActivity extends BaseActivity {
 
         activateToolbar();
 
+        mFlickrRecyclerViewAdapter =
+                new FlickrRecyclerViewAdapter(MainActivity.this, new ArrayList<Photo>());
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mFlickrRecyclerViewAdapter);
 
         ProcessPhotos processPhotos = new ProcessPhotos("Lollipop,android", true);
         processPhotos.execute();
@@ -89,9 +92,7 @@ public class MainActivity extends BaseActivity {
             @Override
             protected void onPostExecute(String webData) {
                 super.onPostExecute(webData);
-                mFlickrRecyclerViewAdapter =
-                        new FlickrRecyclerViewAdapter(MainActivity.this, getPhotos());
-                mRecyclerView.setAdapter(mFlickrRecyclerViewAdapter);
+                mFlickrRecyclerViewAdapter.loadNewData(getPhotos());
             }
         }
     }
