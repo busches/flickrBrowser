@@ -44,6 +44,6 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
 
     @Override
     public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-         
+
     }
 }
