@@ -35,12 +35,14 @@ public class MainActivity extends BaseActivity {
                 mRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(MainActivity.this, "Normal Tap", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, PhotoDetailsActivity.class);
+                intent.putExtra(PHOTO_TRANSFER, mFlickrRecyclerViewAdapter.getPhoto(position));
+                startActivity(intent);
             }
 
             @Override
             public void onItemLongClick(View view, int position) {
-                Toast.makeText(MainActivity.this, "Long Tap", Toast.LENGTH_SHORT).show();
+
             }
         }));
     }
