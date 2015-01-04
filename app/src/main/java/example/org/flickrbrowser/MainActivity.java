@@ -1,7 +1,9 @@
 package example.org.flickrbrowser;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -24,9 +26,6 @@ public class MainActivity extends BaseActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        ProcessPhotos processPhotos = new ProcessPhotos("Lollipop,android", true);
-        processPhotos.execute();
     }
 
     @Override
@@ -53,6 +52,17 @@ public class MainActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String searchString = sharedPreferences.getString(FLICKR_QUERY, "Lollipop,android");
+
+        ProcessPhotos processPhotos = new ProcessPhotos(searchString, true);
+        processPhotos.execute();
     }
 
     public class ProcessPhotos extends GetFlickrJsonData {
